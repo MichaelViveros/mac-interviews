@@ -19,39 +19,62 @@
 # 3 in hash map? yes!
 # pair [1, 3]
 # { 1 => 1, 3 => 0 }
+
+# time - O(n), space - O(n)
 def pairsSumToTarget(nums, targetSum):
-    occurrences = {}
+    occurrences = {} # space - O(n)
+
+    # time - O(n)
     for num in nums:
         if num in occurrences:
             occurrences[num] += 1
         else:
             occurrences[num] = 1
     print("occurrences " + str(occurrences))
-    pairs = []
-    for i in range(0, len(nums)):
+
+    pairs = [] # space - O(n)
+    # time - O(n * 1)
+    for i in range(0, len(nums)): # time - O(n)
         numI = nums[i]
         if occurrences[numI] == 0:
             continue
         numJ = targetSum - numI
         if numI == numJ:
-            if occurrences[numI] >= 2:
+            if occurrences[numI] >= 2: # time - O(1)
                 print("numI " + str(numI) + ", numJ " + str(numJ))
                 pairs.append([numI, numJ])
                 occurrences[numI] -= 2
                 print("occurrences " + str(occurrences))
         else:
-            if numJ in occurrences and occurrences[numJ] >= 1:
+            if numJ in occurrences and occurrences[numJ] >= 1: # time - O(1)
                 print("numI " + str(numI) + ", numJ " + str(numJ))
                 pairs.append([numI, numJ])
                 occurrences[numI] -= 1
                 occurrences[numJ] -= 1
                 print("occurrences " + str(occurrences))
     print("\n pairs " + str(pairs))
-# for j in range(i + 1, len(nums)):
-#     if nums[i] != None and nums[j] != None:
-#         if nums[j] == numJ:
-#             print("i " + str(i) + ", j " + str(j))
-#             pairs.append([nums[i], nums[j]])
-#             nums[i] = None
-#             nums[j] = None
-#             print("nums " + str(nums))
+
+print("pairsSumToTarget([ 1, 1, 3 ], 4):\n")
+pairsSumToTarget([ 1, 1, 3 ], 4)
+
+print("\n\npairsSumToTarget([ 7, 2, 5, 8, 3 ], 10):\n")
+pairsSumToTarget([ 7, 2, 5, 8, 3 ], 10)
+
+# time - O(n^2), space - O(n)
+def pairsSumToTargetSlow(nums, targetSum):
+    pairs = [] # space - O(n)
+    # time - O(n * n) = O(n^2)
+    for i in range(0, len(nums)): # time - O(n)
+        numI = nums[i]
+        if numI == None:
+            continue
+        numJ = targetSum - numI
+        for j in range(i + 1, len(nums)): # time - O(n)
+            if nums[i] != None and nums[j] != None:
+                if nums[j] == numJ:
+                    print("i " + str(i) + ", j " + str(j))
+                    pairs.append([nums[i], nums[j]])
+                    nums[i] = None
+                    nums[j] = None
+                    print("nums " + str(nums))
+        print("\n pairs " + str(pairs))
